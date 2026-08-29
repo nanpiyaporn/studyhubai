@@ -115,7 +115,7 @@ npm install
 cp .env.example .env
 # then fill in the values described below
 
-# 4. Run the app (single command runs both API + frontend on one port)
+# 4. Run the app (a single command runs both API + frontend on one port)
 bun run dev
 # — or —
 npm run dev
@@ -171,12 +171,17 @@ studyhubai/
 
 ## Challenges We Ran Into
 
-- **Do by learning it** When I double-check this project, some of the request still stuck. It may not be perfect; at least we learned something. Let's check it out at [StudyHub.ai.studio](https://studyhuba.ai.studio/)
+- **Do by learning it** When I double-check this project, some of the requests are still stuck. It may not be perfect, but we learned something. Let's check it out at [StudyHub.ai.studio](https://studyhuba.ai.studio/)
 - **There will be some error happen**; we will ask Gemini to fix that
   ![how to fix error](assets/hackathon-assets/error2.png)
 
-  Picture 2: how to fix error.
-
+  Picture 2: How to fix the error.
+  
+- **Prepaid issue** We ran into a payment method issue. To be able to run the agent, we need to add some fuel.
+  ![Prepaid issue](https://github.com/nanpiyaporn/studyhubai/blob/main/assets/hackathon-assets/error2_5version.png)
+  
+   Picture 3: Adding a fuel before the agents work.
+  
 - **Keeping Gemini's output reliably structured.** Five agents each depend on a specific JSON shape coming back from one syllabus parse — getting consistent, schema-valid output across wildly different syllabus formats took prompt iteration.
 - **Real OAuth scopes, not a mock.** Wiring genuine `calendar.events`, `tasks`, and `gmail.compose` scopes through Google Identity Services — and handling token expiry gracefully — took more care than a simulated integration would have.
 - **PDF syllabi.** Not every syllabus is plain text; extracting clean structure from scanned/formatted PDFs via a multimodal model call required a dedicated server-side extraction path.
@@ -184,9 +189,16 @@ studyhubai/
 
 ## Pictures of the moment
 
+  ![full service](https://github.com/nanpiyaporn/studyhubai/blob/main/assets/hackathon-assets/fullweb1.png)
+
+  Picture 4: Overall project.
+
  ![Ankiflashcard](assets/hackathon-assets/ankiflashcard.png)
   
-  Picture 3: Anki Agent helps a student build a study flashcard.
+  Picture 5: Anki Agent helps a student build a study flashcard.
+
+  Demo version 1: ![version1](https://youtu.be/A3da_YnF5ic)
+  Demo version 2: ![version2](https://youtu.be/m2H66gFQqEM)
 
 
 ## What's Next
