@@ -197,9 +197,9 @@ studyhubai/
   
   Picture 5: Anki Agent helps a student build a study flashcard.
 
-  Demo version 1: ![version1](https://youtu.be/A3da_YnF5ic)
-  Demo version 2: ![version2](https://youtu.be/m2H66gFQqEM)
-
+  [![StudyHub AI — Demo Video 1](https://img.youtube.com/vi/A3da_YnF5ic/hqdefault.jpg)](https://youtu.be/A3da_YnF5ic))
+  [![StudyHub AI — Demo Video 2](https://img.youtube.com/vi/m2H66gFQqEM/hqdefault.jpg)](https://youtu.be/m2H66gFQqEM)
+  
 
 ## What's Next
 
