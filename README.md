@@ -62,20 +62,21 @@ Every run is persisted to **Firebase Firestore**, so a student's courses, decks,
 ## Agent Workflow Diagram
 
 ![StudyHub AI agent workflow — student uploads a syllabus to an orchestrator agent, which calls Gemini to select the right specialist agent, which in turn calls the matching tool (Calendar API, Gmail & Tasks API, OER textbook search, audio-to-LaTeX, Anki generator), and returns a synthesized result to the student](assets/hackathon-assets/02-workflow-diagram.png)
+Picture 1: Study AI agent workflow.
 
 ## Key Features
 
-- 📚 **Textbook Procurement Hub** — free/low-cost textbook finder with side-by-side cost comparison.
-- 🔬 **Research Assistant** — literature summarization, methodology extraction, BibTeX generation.
-- 🎙️ **Voice-to-LaTeX** — speak a formula, get clean, exportable LaTeX back.
-- ⚡ **Active Recall / Anki Hub** — SM-2 spaced-repetition decks with an interactive quiz arena and `.apkg`/TSV export.
-- 🛡️ **Policy Guardian** — surfaces syllabus rules (no-backtracking, cumulative vs. non-cumulative, timed windows) so nothing gets missed.
-- 📅 **Real Google Calendar sync** — actual 420-minute study/exam-prep blocks, not a suggestion in a chat bubble.
-- ✅ **Real Google Tasks sync** — action items written to the student's own task list.
-- ✉️ **Real Gmail drafts** — instructor emails pre-written and left in Drafts for review before sending.
-- 🖥️ **Agent Activity Terminal** — a live, transparent log of what each agent is doing and why.
-- 🗂️ **Saved Orders** — every processed course is stored in Firestore and can be revisited later.
-- 🧭 **Architecture View** — an in-app, explorable diagram of every agent, its inputs/outputs, and the tools it calls.
+- **Textbook Procurement Hub** — free/low-cost textbook finder with side-by-side cost comparison.
+- **Research Assistant** — literature summarization, methodology extraction, BibTeX generation.
+- **Voice-to-LaTeX** — speak a formula, get clean, exportable LaTeX back.
+- **Active Recall / Anki Hub** — SM-2 spaced-repetition decks with an interactive quiz arena and `.apkg`/TSV export.
+- **Policy Guardian** — surfaces syllabus rules (no-backtracking, cumulative vs. non-cumulative, timed windows) so nothing gets missed.
+- **Real Google Calendar sync** — actual 420-minute study/exam-prep blocks, not a suggestion in a chat bubble.
+- **Real Google Tasks sync** — action items written to the student's own task list.
+- **Real Gmail drafts** — instructor emails pre-written and left in Drafts for review before sending.
+- **Agent Activity Terminal** — a live, transparent log of what each agent is doing and why.
+- **Saved Orders** — every processed course is stored in Firestore and can be revisited later.
+- **Architecture View** — an in-app, explorable diagram of every agent, its inputs/outputs, and the tools it calls.
 
 ## Tech Stack
 
@@ -135,11 +136,11 @@ Copy `.env.example` to `.env` and fill in:
 
 | Variable | Required | Purpose |
 |---|---|---|
-| `GEMINI_API_KEY` | ✅ | Powers every agent's calls to the Gemini API |
+| `GEMINI_API_KEY` | Yes | Powers every agent's calls to the Gemini API |
 | `APP_URL` | Recommended | Public URL of the deployed app (auto-injected on Cloud Run) |
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | For Workspace sync | OAuth credentials used for Calendar/Tasks/Gmail scopes |
-| `FIREBASE_PROJECT_ID`, `FIREBASE_APP_ID`, `FIREBASE_API_KEY`, `FIREBASE_AUTH_DOMAIN`, `FIREBASE_FIRESTORE_DATABASE_ID`, `FIREBASE_STORAGE_BUCKET`, `FIREBASE_MESSAGING_SENDER_ID` | ✅ | Firestore persistence for saved courses, decks, and study plans |
-| `VITE_FIREBASE_*` equivalents | ✅ (client-side) | Same Firebase config, exposed to the Vite-built frontend |
+| `FIREBASE_PROJECT_ID`, `FIREBASE_APP_ID`, `FIREBASE_API_KEY`, `FIREBASE_AUTH_DOMAIN`, `FIREBASE_FIRESTORE_DATABASE_ID`, `FIREBASE_STORAGE_BUCKET`, `FIREBASE_MESSAGING_SENDER_ID` | Yes | Firestore persistence for saved courses, decks, and study plans |
+| `VITE_FIREBASE_*` equivalents | Yes (client-side) | Same Firebase config, exposed to the Vite-built frontend |
 
 None of these are committed to the repo — see `.env.example` for the full template.
 
@@ -170,14 +171,26 @@ studyhubai/
 
 ## Challenges We Ran Into
 
-*(Draft — personalize this section with what actually gave you trouble; a few likely candidates from the codebase are outlined below as a starting point.)*
+- **Do by learning it** When I double-check this project, some of the request still stuck. It may not be perfect; at least we learned something. Let's check it out at [StudyHub.ai.studio](https://studyhuba.ai.studio/)
+- **There will be some error happen**; we will ask Gemini to fix that
+  ![how to fix error](assets/hackathon-assets/error2.png)
+
+  Picture 2: how to fix error.
 
 - **Keeping Gemini's output reliably structured.** Five agents each depend on a specific JSON shape coming back from one syllabus parse — getting consistent, schema-valid output across wildly different syllabus formats took prompt iteration.
 - **Real OAuth scopes, not a mock.** Wiring genuine `calendar.events`, `tasks`, and `gmail.compose` scopes through Google Identity Services — and handling token expiry gracefully — took more care than a simulated integration would have.
 - **PDF syllabi.** Not every syllabus is plain text; extracting clean structure from scanned/formatted PDFs via a multimodal model call required a dedicated server-side extraction path.
 - **420-minute block scheduling around existing commitments.** Reserving a genuinely uninterrupted 7-hour window without just overwriting a student's existing calendar events needed conflict-aware logic, not a naive insert.
 
+## Pictures of the moment
+
+ ![Ankiflashcard](assets/hackathon-assets/ankiflashcard.png)
+  
+  Picture 3: Anki Agent helps a student build a study flashcard.
+
+
 ## What's Next
+
 
 - Deeper conflict resolution when auto-scheduling around a student's existing calendar.
 - Expanding the Textbook Procurement agent to more OER catalogs and campus library systems.
